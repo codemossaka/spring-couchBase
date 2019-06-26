@@ -20,7 +20,7 @@ import java.io.IOException;
 @Service
 public class GraphQlService {
 
-    @Value("classpath:customer.graphql")
+    @Value("classpath:schema.graphql")
     Resource resource;
 
     private GraphQL graphQL;
