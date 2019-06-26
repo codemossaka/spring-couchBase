@@ -1,0 +1,21 @@
+schema {
+    query: Query
+}
+
+type Query{
+    allMenu: [Menu],
+}
+
+
+type Menu{
+    id: ID,
+    name: String,
+    link: String,
+    short_url: String,
+    parent: Int,
+    childreen: SubMenu!
+}
+
+type SubMenu {
+    elements: [Menu]
+}
