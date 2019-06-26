@@ -1,13 +1,10 @@
-package ru.sportexpress.menuApp.controller;
+package ru.sportexpress.menuApp.web.controller;
 
-import graphql.ExecutionResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sportexpress.menuApp.entity.Menu;
-import ru.sportexpress.menuApp.service.MenuService;
-import ru.sportexpress.menuApp.service.GraphQlService;
+import ru.sportexpress.menuApp.web.service.MenuService;
+import ru.sportexpress.menuApp.web.service.GraphQlService;
 
 import java.util.List;
 import java.util.Optional;

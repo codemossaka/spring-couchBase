@@ -1,4 +1,4 @@
-package ru.sportexpress.menuApp.service;
+package ru.sportexpress.menuApp.web.service;
 
 import ru.sportexpress.menuApp.entity.Menu;
 

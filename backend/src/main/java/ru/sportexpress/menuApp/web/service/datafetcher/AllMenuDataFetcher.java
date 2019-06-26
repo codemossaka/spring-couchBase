@@ -1,4 +1,4 @@
-package ru.sportexpress.menuApp.service.datafetcher;
+package ru.sportexpress.menuApp.web.service.datafetcher;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;

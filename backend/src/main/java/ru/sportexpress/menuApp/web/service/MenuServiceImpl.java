@@ -1,8 +1,9 @@
-package ru.sportexpress.menuApp.service;
+package ru.sportexpress.menuApp.web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sportexpress.menuApp.entity.Menu;
+import ru.sportexpress.menuApp.exceptions.MenuNotFoundException;
 import ru.sportexpress.menuApp.repository.MenuRepository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class MenuServiceImpl implements MenuService {
     public Menu update(int id, Menu menu) {
         Menu menu1 = menuRepository.findById(id).orElse(null);
         if (menu1 == null) {
-            return null;
+            throw new MenuNotFoundException("not found menu with id "+ id);
         }
         menu1.setName(menu.getName());
         menu1.setLink(menu.getLink());
@@ -49,7 +50,7 @@ public class MenuServiceImpl implements MenuService {
     public Menu delete(int id) {
         Menu menu2 = menuRepository.findById(id).orElse(null);
         if (menu2 == null) {
-            return null;
+            throw new MenuNotFoundException("not found menu with id "+ id);
         }
         menuRepository.delete(menu2);
         return null;

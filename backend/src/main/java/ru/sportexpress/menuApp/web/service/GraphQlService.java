@@ -1,4 +1,4 @@
-package ru.sportexpress.menuApp.service;
+package ru.sportexpress.menuApp.web.service;
 
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import ru.sportexpress.menuApp.service.datafetcher.AllMenuDataFetcher;
+import ru.sportexpress.menuApp.web.service.datafetcher.AllMenuDataFetcher;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
