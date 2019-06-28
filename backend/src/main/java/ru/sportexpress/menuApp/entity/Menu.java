@@ -2,17 +2,19 @@ package ru.sportexpress.menuApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 
 @NoArgsConstructor
 @Table(name = "menu")
 @Entity
-@Data
+@Getter
+@Setter
 public class Menu {
 
     @Id
@@ -33,13 +35,16 @@ public class Menu {
     private String link_url;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "parent_id")
-    private Menu child;
+    @Column(name = "parent_id")
+    private Integer parentId;
 
     @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
+    private Menu child;
+
     @OneToMany(mappedBy = "child", cascade = {CascadeType.ALL})
-    private Set<Menu> childreen;
+    private Set<Menu> children;
 
     @JsonIgnore
     @Enumerated(EnumType.STRING)

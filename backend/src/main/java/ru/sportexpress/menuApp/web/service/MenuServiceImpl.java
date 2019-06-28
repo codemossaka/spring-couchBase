@@ -37,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
 //        menu1.setLink(menu.getLink());
 //        menu1.setShortLink(menu.getShortLink());
         menuRepository.save(menu1);
-        return (Menu) menu1.getChildreen();
+        return menu1;
     }
 
     @Override
