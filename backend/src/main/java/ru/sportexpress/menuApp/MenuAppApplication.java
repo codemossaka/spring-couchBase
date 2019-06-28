@@ -17,13 +17,22 @@ public class MenuAppApplication {
     @Autowired
     MenuRepository menuRepository;
 //
-    @PostConstruct
-    public void init() {
-        menuRepository.saveAll(Stream.of(
-                new Menu("1111", "John","/new", "fff", Arrays.asList(new Menu[]{new Menu("231", "ggg", "/new", "gggg", Arrays.asList(new Menu[] {}))})),
-                new Menu("2344", "ggg","/new", "gggg", Arrays.asList(new Menu[] {}))
-        ).collect(Collectors.toList()));
-    }
+//    @PostConstruct
+//    public void init() {
+//        menuRepository.saveAll(Stream.of(
+//                new Menu("1111", "John","/new", "fff",
+//                        Arrays.asList(new Menu[]{new Menu("231", "ggg", "/new", "gggg", Arrays.asList(new Menu[] {}))})),
+//                new Menu("2344", "ggg","/dnghn", "gggg", Arrays.asList(new Menu[] {})),
+//                new Menu("355", "tdyj","/yjy", "errt", Arrays.asList(new Menu[] {})),
+//                new Menu("46", "djyj","/jytjyj", "hrth", Arrays.asList(new Menu[] {})),
+//                new Menu("46464", "yjky","/jyjyj", "hhhhrh", Arrays.asList(new Menu[] {})),
+//                new Menu("555", "ggg","/jyjyj", "trh", Arrays.asList(new Menu[] {})),
+//                new Menu("4346", "fmffm","/ye", "drth", Arrays.asList(new Menu[] {})),
+//                new Menu("888", "hluilui","/dnjyty", "fdyj", Arrays.asList(new Menu[] {})),
+//                new Menu("577", "gfrtrh","/new", "yjyjy", Arrays.asList(new Menu[] {})),
+//                new Menu("777", "gfhdhtrh","/dnhn", "gfdh", Arrays.asList(new Menu[] {}))
+//        ).collect(Collectors.toList()));
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(MenuAppApplication.class, args);

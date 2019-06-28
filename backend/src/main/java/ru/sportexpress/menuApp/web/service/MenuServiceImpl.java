@@ -33,11 +33,11 @@ public class MenuServiceImpl implements MenuService {
         if (menu1 == null) {
             throw new MenuNotFoundException("not found menu with id "+ id);
         }
-        menu1.setName(menu.getName());
-        menu1.setLink(menu.getLink());
-        menu1.setShortLink(menu.getShortLink());
+//        menu1.setName(menu.getName());
+//        menu1.setLink(menu.getLink());
+//        menu1.setShortLink(menu.getShortLink());
         menuRepository.save(menu1);
-        return menu1;
+        return (Menu) menu1.getChildreen();
     }
 
     @Override

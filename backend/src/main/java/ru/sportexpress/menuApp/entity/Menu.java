@@ -1,68 +1,53 @@
 package ru.sportexpress.menuApp.entity;
 
-import com.couchbase.client.java.repository.annotation.Field;
-import com.couchbase.client.java.repository.annotation.Id;
-import lombok.*;
-import org.springframework.data.couchbase.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
-@Document
+@Table(name = "menu")
+@Entity
+@Data
 public class Menu {
 
     @Id
-    @Setter
-    @Getter
-    private String id;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Field
-    @Setter
-    @Getter
-    private String name;
+    @Column(name = "title")
+    private String title;
 
-    @Field
-    @Setter
-    @Getter
-    private String link;
+    @Column(name = "active")
+    private Boolean active;
 
-    @Field(value = "short_link")
-    @Setter
-    @Getter
-    private String shortLink;
+    @Column(name = "weight")
+    private Float weight;
 
-    @Field
-    @Setter
-    @Getter
-    private String parent;
+    @Column(name = "link_url")
+    private String link_url;
 
-    @Field
-    @Getter
-    private List<Menu> chidlreen;
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "parent_id")
+    private Menu child;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "child", cascade = {CascadeType.ALL})
+    private Set<Menu> childreen;
 
-    public void setChidlreen(List<Menu> chidlreen) {
-        this.chidlreen = chidlreen;
-        chidlreen.forEach( menu -> menu.setParent(this.id));
-    }
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    private SortType sortType;
 
-    public Menu(String id, String name, String link, String shortLink, List<Menu> chidlreen) {
-        this.id = id;
-        this.name = name;
-        this.link = link;
-        this.shortLink = shortLink;
-        setChidlreen(chidlreen);
-    }
+}
 
-
-
-    public void addChild(Menu child){
-
-        if (chidlreen!= null){
-            chidlreen = new ArrayList<>();
-        }
-        chidlreen.add(child);
-    }
+enum SortType {
+    row,
+    column
 }

@@ -11,7 +11,7 @@ type Menu{
     id: ID,
     name: String,
     link: String,
-    short_url: String,
+        short_url: String,
     parent: Int,
     childreen: SubMenu!
 }

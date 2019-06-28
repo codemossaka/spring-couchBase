@@ -1,6 +1,9 @@
 package ru.sportexpress.menuApp.web.controller;
 
+import graphql.ExecutionResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sportexpress.menuApp.entity.Menu;
 import ru.sportexpress.menuApp.web.service.MenuService;
@@ -44,9 +47,9 @@ public class HomeController {
         return menuService.delete(id);
     }
 
-//    @PostMapping(value = "/graphql")
-//    public ResponseEntity<Object> getAllCustomers(@RequestBody String query) {
-//        ExecutionResult execute = graphQLService.getGraphQL().execute(query);
-//        return new ResponseEntity<>(execute, HttpStatus.OK);
-//    }
+    @PostMapping(value = "/graphql")
+    public ResponseEntity<Object> getAllCustomers(@RequestBody String query) {
+        ExecutionResult execute = graphQLService.getGraphQL().execute(query);
+        return new ResponseEntity<>(execute, HttpStatus.OK);
+    }
 }
