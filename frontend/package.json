@@ -7,13 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "sl-vue-tree": "^1.8.4",
     "vue": "^2.6.10",
     "vue-draggable-nested-tree": "^2.2.17",
+    "vue-lodash": "^2.0.2",
     "vue-router": "^3.0.3",
     "vuetify": "^1.5.5",
-    "axios": "^0.18.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

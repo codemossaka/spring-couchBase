@@ -5,18 +5,18 @@
                 <v-flex class="md-2">
                     <v-btn @click="collapseAll">collapse Alls</v-btn>
                     <v-btn class="btn btn-primary ml-1" @click="expandAll">expand all</v-btn>
-                    <draggable-tree :data="tree1data" m draggable cross-tree>
+                    <draggable-tree :data="tree1data" m draggable cross-tree @drop="onChange">
                         <div slot-scope="{data, store}">
                             <template v-if="!data.isDragPlaceHolder">
                                 <v-layout row>
                                     <v-flex class="text-md-left">
                                         <b v-if="data.children && data.children.length"
                                            @click="store.toggleOpen(data)">{{data.open ? '-' : '+'}}&nbsp;</b>
-                                        <span><a :href="data.link">{{data.name}}</a></span>
+                                        <span><a :href="data.link">{{data.title}}</a></span>
                                     </v-flex>
 
                                     <v-flex class="text-md-right">
-                                        <v-icon color="green" @click="add">playlist_add</v-icon>
+                                        <v-icon color="green" @click="add(data)">playlist_add</v-icon>
                                         <v-icon color="primary" @click="edit(data)">edit</v-icon>
                                         <v-icon color="red" @click="remove(data)">delete</v-icon>
                                         <v-icon @click="show(data)">visibility</v-icon>
@@ -29,7 +29,7 @@
                 </v-flex>
             </v-flex>
         </v-layout>
-        <v-dialog v-model="showModal" persistent max-width="600px">
+        <v-dialog v-model="showModal" persistent max-width="600px" v-if="detail">
             <v-card>
                 <v-card-title>
                     <span class="headline">User Profile</span>
@@ -39,6 +39,7 @@
                         <v-layout wrap>
                             <v-flex xs12>
                                 <v-text-field
+                                        v-model="detail.title"
                                         label="Название"
                                         hint="example of persistent helper text"
                                         persistent-hint
@@ -46,18 +47,24 @@
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field label="Ссылька" required></v-text-field>
+                                <v-text-field 
+                                v-model="detail.link_url"
+                                label="Ссылька" required></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field label="Кароткая ссылька" required></v-text-field>
+                                <v-text-field 
+                                v-model="detail.weight"
+                                label="Приоритет сортировки" 
+                                required></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-autocomplete
+                                <!-- <v-autocomplete
+
                                         :items="tree1data"
                                         label="Дочерные ссыльки"
                                         item-text="name"
                                         multiple
-                                ></v-autocomplete>
+                                ></v-autocomplete> -->
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -65,8 +72,8 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click="showModal = false">Close</v-btn>
-                    <v-btn color="blue darken-1" flat @click="showModal = false">Save</v-btn>
+                    <v-btn color="blue darken-1" flat @click="closeDialog">Close</v-btn>
+                    <v-btn color="blue darken-1" flat @click="saveDialog">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -75,17 +82,17 @@
 
 <script>
     import {DraggableTree} from 'vue-draggable-nested-tree'
-    import {GET_MENUS} from '@/vuex/types';
+    import {GET_MENUS, SAVE_MENU} from '@/vuex/types';
     import * as th from 'tree-helper'
-    import ModalForm from "./ModalForm";
 
     export default {
+        name: "MainComponent",
         components: {
-            ModalForm,
             DraggableTree
         },
         data: () => ({
             showModal: false,
+            detail: null
         }),
         created(){
           this.$store.dispatch(GET_MENUS);
@@ -96,6 +103,18 @@
             }
         },
         methods: {
+            onChange(node, targetTree, oldTree){
+                console.log(node.title, targetTree, oldTree)
+            },
+            onDrop(event, data){
+                let parent = event._vm.$parent;
+                console.log(parent.data.title)
+                
+            },
+            onDrag(event, data){
+                let parent = event._vm.$parent;
+                    console.log(parent.data.title)
+            },
             // add child to tree2
             addChild() {
                 this.tree2data[0].children.push({text: 'child'})
@@ -113,18 +132,36 @@
                     node.open = false
                 })
             },
-            add(){
+            add(data){
                 this.showModal =true
-                console.log("add")
+                let objr = {
+                    active: true,
+                    children: [],
+                    link_url: "",
+                    parentId: data.id,
+                    title: "",
+                    weight: null
+                }
+                this.detail = objr
+                this.$store.dispatch(SAVE_MENU, this.detail);
             },
-            show(item){
-                console.log(item)
-            },
+            
             remove(item){
                 console.log(item)
             },
             edit(item){
-                console.log(item)
+                this.showModal =true
+                this.detail = item
+            },
+
+            closeDialog(){
+                this.showModal = false;
+                this.data = null;
+            },
+
+            saveDialog(){
+                this.showModal = false;
+                this.data = {};
             }
         },
     }
